@@ -2,6 +2,15 @@ package edu.asu.DatabasePart1;
 
 import java.sql.SQLException;
 
+/**
+ * <p> AdminManagerTestingAutomation Class </p>
+ * 
+ * <p> Description: Provides automated testing for the AdminManager class functionalities. </p>
+ * 
+ * @author Dhruv Bansal, Shreyas Bachiraju, Nirek Shah, Dhruv Shetty, Sonit Penchala
+ * 
+ * @version 1.00 2024-10-09 Implementation for admin manager testing automation
+ */
 public class AdminManagerTestingAutomation {
     private static int totalPass = 0;
     private static int failed = 0;
@@ -9,6 +18,11 @@ public class AdminManagerTestingAutomation {
     private static DatabaseHelper databaseHelper;
     private static AdminManager adminManager;
 
+    /**
+     * Main method to run all admin manager tests.
+     * 
+     * @param args command line arguments (not used)
+     */
     public static void main(String[] args) {
         System.out.println("____________________________________________________________________________");
         System.out.println("\nAdminManager Testing Automation");
@@ -34,18 +48,29 @@ public class AdminManagerTestingAutomation {
         }
     }
     
+    /**
+     * Sets up the testing environment by initializing the DatabaseHelper and AdminManager.
+     * 
+     * @throws SQLException if a database access error occurs
+     */
     private static void setup() throws SQLException {
         databaseHelper = new DatabaseHelper();
         databaseHelper.connectToDatabase();
         adminManager = new AdminManager(databaseHelper);
     }
     
+    /**
+     * Tears down the testing environment by closing the database connection.
+     */
     private static void teardown() {
         if (databaseHelper != null) {
             databaseHelper.closeConnection();
         }
     }
     
+    /**
+     * Tests the inviteUser method of AdminManager.
+     */
     private static void testInviteUser() {
         System.out.println("\nTesting inviteUser method:");
         try {
@@ -62,10 +87,12 @@ public class AdminManagerTestingAutomation {
         }
     }
     
+    /**
+     * Tests the resetUserPassword method of AdminManager.
+     */
     private static void testResetUserPassword() {
         System.out.println("\nTesting resetUserPassword method:");
         try {
-
             // Call resetUserPassword method
             String testUsername = adminManager.resetUserPassword();
             
@@ -83,15 +110,16 @@ public class AdminManagerTestingAutomation {
         } finally {
             // Reset System.in to its original state
             System.setIn(System.in);
-       
         }
     }
     
+    /**
+     * Tests the modifyUserRoles method of AdminManager.
+     */
     private static void testModifyUserRoles() {
         System.out.println("\nTesting modifyUserRoles method:");
 
         try {
-
             // Simulate modifyUserRoles method call
             String testUsername = adminManager.modifyUserRoles();
             
@@ -110,6 +138,9 @@ public class AdminManagerTestingAutomation {
         }
     }
     
+    /**
+     * Tests the deleteUserAccount method of AdminManager.
+     */
     private static void testDeleteUserAccount() {
         System.out.println("\nTesting deleteUserAccount method:");
 
