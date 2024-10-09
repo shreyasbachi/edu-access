@@ -86,7 +86,12 @@ public class UserInterface {
      */
     public static char[] getPassword(String prompt) {
         System.out.print(prompt);
-        return System.console().readPassword();
+        if (System.console() != null) {
+            return System.console().readPassword();
+        } else {
+            // Fallback to using Scanner when console is not available
+            return scanner.nextLine().toCharArray();
+        }
     }
 
     /**
