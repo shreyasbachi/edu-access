@@ -9,7 +9,7 @@ import java.util.Random;
  * 
  * <p> Description: Handles all authentication-related operations for users. </p>
  * 
- * @author Dhruv Bansal
+ * @author Dhruv Bansal, Shreyas Bachiraju, Nirek Shah, Dhruv Shetty, Sonit Penchala
  * 
  * @version 1.00 2024-10-09 Implementation for authentication manager
  */

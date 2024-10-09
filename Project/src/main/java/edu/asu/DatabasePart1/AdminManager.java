@@ -7,7 +7,7 @@ import java.util.UUID;
  * 
  * <p> Description: Handles all the use cases for a user with the Admin role. </p>
  * 
- * @author Dhruv Bansal
+ * @author Dhruv Bansal, Shreyas Bachiraju, Nirek Shah, Dhruv Shetty, Sonit Penchala
  * 
  * @version 1.00 2024-10-09 Implementation for admin manager
  */
@@ -103,7 +103,7 @@ public class AdminManager {
     /**
      * Handles the process of inviting a new user by generating a random code.
      */
-    private void inviteUser() throws SQLException {
+    public void inviteUser() throws SQLException {
         String invitationCode = generateInvitationCode();
         System.out.println("-------------------------------------");
         System.out.println("Send this invitation code to the user: " + invitationCode);
