@@ -37,13 +37,19 @@ public class AdminManager {
         String username = UserInterface.getInput("Enter Admin Username: ");
         char[] password = UserInterface.getPassword("Enter Admin Password: ");
         if (authManager.login(username, password)) {
-            System.out.println("-------------------------------------");
-            System.out.println("Admin login successful.");
-            System.out.println("-------------------------------------");
-            if (!databaseHelper.isProfileComplete(username)) {
-                authManager.setupProfile(username);
+            if (databaseHelper.isUserAdmin(username)) {
+                System.out.println("-------------------------------------");
+                System.out.println("Admin login successful.");
+                System.out.println("-------------------------------------");
+                if (!databaseHelper.isProfileComplete(username)) {
+                    authManager.setupProfile(username);
+                }
+                adminSession();
+            } else {
+                System.out.println("-------------------------------------");
+                System.out.println("You do not have admin privileges.");
+                System.out.println("-------------------------------------");
             }
-            adminSession();
         } else {
             System.out.println("-------------------------------------");
             System.out.println("Invalid admin credentials. Try again.");
@@ -54,7 +60,7 @@ public class AdminManager {
     /**
      * Admin session, presenting a menu of admin actions.
      */
-    private void adminSession() throws SQLException {
+    public void adminSession() throws SQLException {
         String choice;
         do {
             System.out.println("\n-------------------------------------");
@@ -118,7 +124,7 @@ public class AdminManager {
     /**
      * Resets a user's password by generating an OTP.
      */
-    public void resetUserPassword() throws SQLException {
+    public String resetUserPassword() throws SQLException {
         String username = UserInterface.getInput("Enter user username to reset password: ");
         if (databaseHelper.doesUserExist(username)) {
             String otp = authManager.generateOTP();
@@ -126,17 +132,19 @@ public class AdminManager {
             System.out.println("-------------------------------------");
             System.out.println("Password reset. OTP: " + otp);
             System.out.println("-------------------------------------");
+            return username;
         } else {
             System.out.println("-------------------------------------");
-            System.out.println("User not found.");
+            System.out.println("Error: User not found.");
             System.out.println("-------------------------------------");
+            throw new SQLException("User not found");
         }
     }
 
     /**
      * Modifies the roles.
      */
-    public void modifyUserRoles() throws SQLException {
+    public String modifyUserRoles() throws SQLException {
         String username = UserInterface.getInput("Enter user username to modify roles: ");
         if (databaseHelper.doesUserExist(username)) {
             System.out.println("Possible roles are: Admin, Instructor or Student.");
@@ -145,10 +153,12 @@ public class AdminManager {
             System.out.println("-------------------------------------");
             System.out.println("User roles updated.");
             System.out.println("-------------------------------------");
+            return username;
         } else {
             System.out.println("-------------------------------------");
             System.out.println("User not found.");
             System.out.println("-------------------------------------");
+            return "";
         }
     }
 

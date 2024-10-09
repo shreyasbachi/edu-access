@@ -42,7 +42,20 @@ class DatabaseHelper {
 			System.err.println("JDBC Driver not found: " + e.getMessage());
 		}
 	}
-
+	
+	public boolean isUserAdmin(String username) throws SQLException {
+		String query = "SELECT roles FROM cse360users WHERE username = ?";
+		try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+			pstmt.setString(1, username);
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					String roles = rs.getString("roles");
+					return roles != null && roles.toLowerCase().contains("admin");
+				}
+			}
+		}
+		return false;
+	}
 	/**
 	 * Creates necessary tables in the database if they don't exist.
 	 * 

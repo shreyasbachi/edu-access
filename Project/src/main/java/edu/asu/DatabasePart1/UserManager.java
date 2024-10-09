@@ -111,10 +111,12 @@ public class UserManager {
                     authManager.setupProfile(username);
                 }
                 String[] roles = databaseHelper.getUserRoles(username);
-                if (roles.length > 1) {
-                    chooseRoleFlow(username, roles);
-                } else if (roles.length == 1) {
-                    userSession(username, roles[0]);
+                if (roles.length > 0) {
+                    if (roles.length > 1) {
+                        chooseRoleFlow(username, roles);
+                    } else {
+                        userSession(username, roles[0]);
+                    }
                 } else {
                     System.out.println("No roles assigned to this user. Please contact an admin.");
                 }
@@ -179,15 +181,20 @@ public class UserManager {
                 System.out.println("1 - Manage Courses");
                 System.out.println("2 - Grade Assignments");
             } else if (role.equalsIgnoreCase("admin")) {
-                new AdminManager(databaseHelper).adminFlow();
-                return;
+                System.out.println("1 - Access Admin Panel");
             }
             System.out.println("Q - Logout");
             System.out.print("Enter your choice: ");
             choice = UserInterface.getInput("").toUpperCase();
-
+    
             switch (choice) {
                 case "1":
+                    if (role.equalsIgnoreCase("admin")) {
+                        new AdminManager(databaseHelper).adminFlow();
+                    } else {
+                        System.out.println("This feature is not implemented yet.");
+                    }
+                    break;
                 case "2":
                     System.out.println("This feature is not implemented yet.");
                     break;
